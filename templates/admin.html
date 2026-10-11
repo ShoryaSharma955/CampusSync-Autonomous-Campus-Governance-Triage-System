@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Resolution Console | CampusSync</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .tech-bg {
+            background-color: #0b1528;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(30, 58, 138, 0.45) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(59, 130, 246, 0.25) 0px, transparent 50%),
+                radial-gradient(at 50% 100%, rgba(15, 23, 42, 0.8) 0px, transparent 50%),
+                linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 100% 100%, 40px 40px, 40px 40px;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(16px);
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.6) inset;
+        }
+        .stat-card {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.6) inset;
+        }
+    </style>
+</head>
+<body class="tech-bg text-slate-900 min-h-screen flex flex-col justify-between m-0 p-0 font-sans">
+    <!-- Top System Header Bar -->
+    <div class="bg-[#070e1c]/90 backdrop-blur-md text-slate-300 text-xs py-2 px-6 border-b border-slate-800/80">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-1">
+            <span class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                CampusSync — Autonomous Campus Governance & Triage System
+            </span>
+            <div class="flex items-center space-x-5 text-[11px]">
+                <span>Support Desk: <strong class="text-white">+91 74288 97000</strong></span>
+                <span><strong class="text-white">support@campussync.in</strong></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Main Navigation Header -->
+    <header class="bg-[#0c1830]/80 backdrop-blur-md text-white shadow-xl border-b border-white/10 sticky top-0 z-30">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row justify-between items-center py-3.5 gap-4">
+            <div>
+                <h1 class="text-lg md:text-xl font-black tracking-tight bg-gradient-to-r from-white via-slate-100 to-indigo-200 bg-clip-text text-transparent">
+                    CampusSync Resolution Console
+                </h1>
+                <p class="text-xs text-indigo-300/80 mt-0.5">Automated NLP Triage • SLA Monitoring • Departmental Dispatch</p>
+            </div>
+            <nav class="flex items-center space-x-1.5 bg-[#070e1c] p-1.5 rounded-xl border border-white/10 shadow-inner">
+                <a href="/" class="text-slate-300 hover:text-white hover:bg-white/5 text-xs font-semibold py-2 px-4 rounded-lg transition">
+                    🎓 Student Portal
+                </a>
+                <a href="/admin" class="bg-gradient-to-r from-indigo-600 to-blue-600 text-white text-xs font-bold py-2 px-4 rounded-lg shadow-md transition">
+                    🛡️ Admin Console
+                </a>
+                <a href="/logout" class="text-rose-400 hover:text-white hover:bg-rose-900/40 text-xs font-bold py-2 px-3 rounded-lg transition border border-rose-800/40">
+                    🚪 Logout
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto p-6 w-full flex-1">
+        <!-- Modern Stat KPI Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+            <div class="stat-card p-5 rounded-2xl border-l-4 border-l-indigo-600">
+                <span class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Total Complaints</span>
+                <div class="text-3xl font-black text-[#0f244a] mt-1">{{ stats.total }}</div>
+                <div class="text-[11px] text-slate-500 mt-1">Logged in CampusSync DB</div>
+            </div>
+
+            <!-- Clickable Urgent Filter KPI Card -->
+            <div id="urgentCard" class="stat-card p-5 rounded-2xl border-l-4 border-l-rose-500 cursor-pointer select-none transition-all duration-200 hover:scale-[1.02] hover:shadow-rose-500/20" title="Click to filter Urgent complaints only">
+                <div class="flex items-center justify-between">
+                    <span class="text-[11px] font-bold text-rose-500 uppercase tracking-wider">Urgent Active Hazards</span>
+                    <span id="filterBadge" class="text-[10px] bg-rose-100 text-rose-700 font-bold px-1.5 py-0.5 rounded border border-rose-200">1-Click Filter</span>
+                </div>
+                <div class="text-3xl font-black text-rose-600 mt-1">{{ stats.urgent }}</div>
+                <div class="text-[11px] text-rose-500 font-semibold mt-1">Under 4-Hour SLA Cap</div>
+            </div>
+
+            <div class="stat-card p-5 rounded-2xl border-l-4 border-l-amber-500">
+                <span class="text-[11px] font-bold text-amber-600 uppercase tracking-wider">In Progress</span>
+                <div class="text-3xl font-black text-amber-600 mt-1">{{ stats.in_progress }}</div>
+                <div class="text-[11px] text-slate-500 mt-1">Active Department Work</div>
+            </div>
+
+            <div class="stat-card p-5 rounded-2xl border-l-4 border-l-emerald-500">
+                <span class="text-[11px] font-bold text-emerald-600 uppercase tracking-wider">Resolution Index</span>
+                <div class="text-3xl font-black text-emerald-600 mt-1">{{ stats.rate }}%</div>
+                <div class="text-[11px] text-slate-500 mt-1">{{ stats.resolved }} Issues Solved</div>
+            </div>
+        </div>
+
+        <!-- Incidents Table in Glass Card -->
+        <div class="glass-card rounded-3xl overflow-hidden border border-white/60">
+            <div class="px-6 py-4 border-b border-slate-200/80 flex flex-col sm:flex-row justify-between items-center bg-slate-50/60 gap-3">
+                <div class="flex items-center gap-3">
+                    <div>
+                        <h2 class="text-base font-bold text-slate-800">
+                            Department Dispatch Queue (<span id="queueCount">{{ complaints|length }}</span>)
+                        </h2>
+                        <p class="text-xs text-slate-500">Unresolved complaints prioritized at top • Auto-routed by NLP triage.</p>
+                    </div>
+                    <span id="activeFilterTag" class="hidden text-xs bg-rose-100 border border-rose-300 text-rose-700 font-bold px-2 py-1 rounded-lg">
+                        Filtering: Urgent Only
+                    </span>
+                </div>
+                
+                <div class="flex items-center gap-2">
+                    <button id="resetFilterBtn" class="hidden text-xs bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-2.5 px-3.5 rounded-xl transition">
+                        Show All
+                    </button>
+                    <a href="/export-csv" class="bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-700 hover:to-teal-800 text-white text-xs font-bold py-2.5 px-4 rounded-xl transition shadow-md flex items-center gap-2">
+                        📥 Export Official CSV Audit
+                    </a>
+                </div>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-xs text-slate-600">
+                    <thead class="bg-slate-100/80 text-slate-700 font-bold uppercase text-[11px] border-b border-slate-200">
+                        <tr>
+                            <th class="p-4">Tracking & AI Confidence</th>
+                            <th class="p-4">Student & Location</th>
+                            <th class="p-4">Issue Details</th>
+                            <th class="p-4">Assigned Department</th>
+                            <th class="p-4">Priority & SLA Target</th>
+                            <th class="p-4">Photo</th>
+                            <th class="p-4">Status & Resolution Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="complaintsTableBody" class="divide-y divide-slate-100">
+                        {% for c in complaints %}
+                        <tr class="complaint-row hover:bg-indigo-50/40 transition duration-150 {% if c.status == 'Resolved' %}opacity-75 bg-slate-50/40{% endif %}" data-priority="{{ c.priority }}" data-status="{{ c.status }}">
+                            <td class="p-4">
+                                <a href="/track/{{ c.tracking_id }}" target="_blank" class="font-mono font-bold text-indigo-700 hover:underline bg-indigo-50 border border-indigo-200 px-2.5 py-1 rounded-lg block w-fit shadow-xs">
+                                    {{ c.tracking_id }}
+                                </a>
+                                <span class="text-[10px] text-emerald-700 font-bold mt-1 inline-block">AI Score: {{ c.confidence }}%</span>
+                            </td>
+                            <td class="p-4">
+                                <div class="font-bold text-slate-900">{{ c.student_name }} ({{ c.student_id }})</div>
+                                {% if c.phone_number %}
+                                <div class="text-[11px] text-slate-500 font-mono">📞 +91 {{ c.phone_number }}</div>
+                                {% endif %}
+                                <div class="text-[11px] text-indigo-700 font-semibold mt-0.5">📍 {{ c.location }}</div>
+                            </td>
+                            <td class="p-4 max-w-xs">
+                                <div class="font-bold text-slate-900">{{ c.title }}</div>
+                                <div class="text-slate-500 truncate" title="{{ c.description }}">{{ c.description }}</div>
+                            </td>
+                            <td class="p-4">
+                                <span class="inline-block bg-slate-100 text-slate-800 px-2.5 py-1 rounded-lg font-medium border border-slate-300/70">
+                                    {{ c.category }}
+                                </span>
+                                <div class="text-[11px] text-indigo-700 font-bold mt-1.5">🏢 {{ c.department }}</div>
+                            </td>
+                            <td class="p-4">
+                                {% if c.priority == 'Urgent' %}
+                                    <span class="bg-rose-100 text-rose-700 text-[11px] font-bold px-2.5 py-1 rounded-lg border border-rose-200">Urgent</span>
+                                {% elif c.priority == 'High' %}
+                                    <span class="bg-amber-100 text-amber-700 text-[11px] font-bold px-2.5 py-1 rounded-lg border border-amber-200">High</span>
+                                {% else %}
+                                    <span class="bg-emerald-100 text-emerald-700 text-[11px] font-bold px-2.5 py-1 rounded-lg border border-emerald-200">Normal</span>
+                                {% endif %}
+                                <div class="text-[10px] text-slate-400 mt-1 font-mono">Target: {{ c.sla_target }}</div>
+                            </td>
+                            <td class="p-4">
+                                {% if c.image_path %}
+                                    <a href="/static/uploads/{{ c.image_path }}" target="_blank">
+                                        <img src="/static/uploads/{{ c.image_path }}" class="h-11 w-11 rounded-xl object-cover border border-slate-300 hover:scale-110 shadow-sm transition">
+                                    </a>
+                                {% else %}
+                                    <span class="text-slate-400 italic">None</span>
+                                {% endif %}
+                            </td>
+                            <td class="p-4">
+                                <form action="/update-status/{{ c.id }}" method="POST" class="flex items-center space-x-2">
+                                    <select name="status" class="text-xs border border-slate-300 rounded-lg px-2.5 py-1.5 bg-white font-medium focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-xs {% if c.status == 'Resolved' %}text-emerald-700 font-bold bg-emerald-50 border-emerald-300{% elif c.status == 'In Progress' %}text-amber-700 font-bold bg-amber-50 border-amber-300{% else %}text-indigo-700 font-bold{% endif %}">
+                                        <option value="Submitted" {% if c.status == 'Submitted' %}selected{% endif %}>Submitted</option>
+                                        <option value="In Progress" {% if c.status == 'In Progress' %}selected{% endif %}>In Progress</option>
+                                        <option value="Resolved" {% if c.status == 'Resolved' %}selected{% endif %}>Resolved</option>
+                                    </select>
+                                    <button type="submit" class="bg-[#0f244a] hover:bg-indigo-900 text-white px-3 py-1.5 rounded-lg transition font-bold shadow-xs">
+                                        Save
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <!-- Clean Footer -->
+    <footer class="bg-[#070e1c]/90 border-t border-slate-800/80 py-3.5 text-center text-xs text-slate-400">
+        CampusSync Automated Triage Platform | Support Desk: +91 74288 97000 | support@campussync.in
+    </footer>
+
+    <!-- Interactive Urgent Filter Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const urgentCard = document.getElementById('urgentCard');
+            const resetBtn = document.getElementById('resetFilterBtn');
+            const activeFilterTag = document.getElementById('activeFilterTag');
+            const filterBadge = document.getElementById('filterBadge');
+            const queueCount = document.getElementById('queueCount');
+            const rows = document.querySelectorAll('.complaint-row');
+            
+            let isUrgentFiltered = false;
+
+            function toggleUrgentFilter() {
+                isUrgentFiltered = !isUrgentFiltered;
+                let visibleCount = 0;
+
+                rows.forEach(row => {
+                    const priority = row.getAttribute('data-priority');
+                    const status = row.getAttribute('data-status');
+                    if (isUrgentFiltered) {
+                        if (priority === 'Urgent' && status !== 'Resolved') {
+                            row.style.display = '';
+                            visibleCount++;
+                        } else {
+                            row.style.display = 'none';
+                        }
+                    } else {
+                        row.style.display = '';
+                        visibleCount++;
+                    }
+                });
+
+                queueCount.innerText = visibleCount;
+
+                if (isUrgentFiltered) {
+                    urgentCard.classList.add('ring-2', 'ring-rose-500', 'bg-rose-50/50');
+                    filterBadge.innerText = 'Active (Click to Reset)';
+                    filterBadge.className = 'text-[10px] bg-rose-600 text-white font-bold px-1.5 py-0.5 rounded shadow-xs';
+                    activeFilterTag.classList.remove('hidden');
+                    resetBtn.classList.remove('hidden');
+                } else {
+                    urgentCard.classList.remove('ring-2', 'ring-rose-500', 'bg-rose-50/50');
+                    filterBadge.innerText = '1-Click Filter';
+                    filterBadge.className = 'text-[10px] bg-rose-100 text-rose-700 font-bold px-1.5 py-0.5 rounded border border-rose-200';
+                    activeFilterTag.classList.add('hidden');
+                    resetBtn.classList.add('hidden');
+                }
+            }
+
+            if (urgentCard) {
+                urgentCard.addEventListener('click', toggleUrgentFilter);
+            }
+
+            if (resetBtn) {
+                resetBtn.addEventListener('click', toggleUrgentFilter);
+            }
+        });
+    </script>
+</body>
+</html>

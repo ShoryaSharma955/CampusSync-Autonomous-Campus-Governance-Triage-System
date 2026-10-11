@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Portal | CampusSync</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .tech-bg {
+            background-color: #0b1528;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(30, 58, 138, 0.45) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(59, 130, 246, 0.25) 0px, transparent 50%),
+                radial-gradient(at 50% 100%, rgba(15, 23, 42, 0.8) 0px, transparent 50%),
+                linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 100% 100%, 40px 40px, 40px 40px;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(16px);
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.6) inset;
+        }
+    </style>
+</head>
+<body class="tech-bg text-slate-900 min-h-screen flex flex-col justify-between m-0 p-0 font-sans">
+    <!-- Top System Header Bar -->
+    <div class="bg-[#070e1c]/90 backdrop-blur-md text-slate-300 text-xs py-2 px-6 border-b border-slate-800/80">
+        <div class="max-w-4xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-1">
+            <span class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                CampusSync — Autonomous Campus Governance & Triage System
+            </span>
+            <div class="flex items-center space-x-5 text-[11px]">
+                <span>Support Desk: <strong class="text-white">+91 74288 97000</strong></span>
+                <span><strong class="text-white">support@campussync.in</strong></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Navigation Header -->
+    <header class="bg-[#0c1830]/80 backdrop-blur-md text-white shadow-xl border-b border-white/10 sticky top-0 z-30">
+        <div class="max-w-4xl mx-auto px-6 flex justify-between items-center py-3.5">
+            <div>
+                <span class="text-[10px] tracking-wider uppercase font-bold text-indigo-400">CampusSync Platform</span>
+                <h1 class="text-lg md:text-xl font-black tracking-tight text-white">Campus Resolution Management System</h1>
+            </div>
+            <div class="flex items-center space-x-2 bg-[#070e1c] p-1.5 rounded-xl border border-white/10 shadow-inner">
+                <a href="/" class="bg-gradient-to-r from-indigo-600 to-blue-600 text-white text-xs font-bold py-2 px-4 rounded-lg shadow-md transition">
+                    🎓 Student Portal
+                </a>
+                <a href="/admin" class="text-slate-300 hover:text-white hover:bg-white/5 text-xs font-semibold py-2 px-4 rounded-lg transition">
+                    🛡️ Admin Console
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto p-6 w-full flex-1 flex flex-col justify-center">
+        <div class="glass-card p-6 md:p-8 rounded-3xl border border-white/60">
+            <div class="flex flex-col sm:flex-row justify-between sm:items-center pb-5 border-b border-slate-200 gap-3">
+                <div>
+                    <span class="bg-indigo-50 border border-indigo-200 text-indigo-700 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">
+                        ⚡ Instant AI Department Routing
+                    </span>
+                    <h2 class="text-2xl font-black text-slate-900 mt-2">Register a Campus Incident</h2>
+                    <p class="text-xs text-slate-500 mt-0.5">Submit equipment, Wi-Fi, lab, or sanitation issues directly to university maintenance.</p>
+                </div>
+                <a href="/track" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold px-4 py-2.5 rounded-xl border border-slate-300/80 transition flex items-center justify-center gap-1.5">
+                    🔍 Track Live Status
+                </a>
+            </div>
+
+            <form action="/submit" method="POST" enctype="multipart/form-data" class="mt-6 space-y-5">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-600 uppercase tracking-wider mb-1.5">Student Full Name</label>
+                        <input type="text" name="student_name" placeholder="e.g. Rahul Sharma" required
+                            class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-600 uppercase tracking-wider mb-1.5">Roll / Admission ID</label>
+                        <input type="text" name="student_id" placeholder="e.g. 23/CSE/042" required
+                            class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-600 uppercase tracking-wider mb-1.5">Student Mobile Number</label>
+                        <input type="tel" name="phone_number" placeholder="10-digit phone for SMS updates" pattern="[0-9]{10}" required
+                            class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs font-mono font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-[11px] font-bold text-slate-600 uppercase tracking-wider mb-1.5">Exact Campus Location</label>
+                    <input type="text" name="location" placeholder="e.g. Lab 421, Block C, 4th Floor" required
+                        class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                </div>
+
+                <div>
+                    <label class="block text-[11px] font-bold text-slate-600 uppercase tracking-wider mb-1.5">Complaint Headline</label>
+                    <input type="text" id="titleInput" name="title" placeholder="Brief summary (e.g. Exposed live wire spark)" required
+                        class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs font-semibold text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                </div>
+
+                <div>
+                    <label class="block text-[11px] font-bold text-slate-600 uppercase tracking-wider mb-1.5">Detailed Description</label>
+                    <textarea id="descInput" name="description" rows="3" placeholder="Provide complete specifics of the defect or emergency..." required
+                        class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
+                </div>
+
+                <!-- Real-Time Client NLP Preview -->
+                <div class="bg-indigo-50/70 border border-indigo-200/80 rounded-2xl p-4">
+                    <div class="flex items-center justify-between text-xs mb-2">
+                        <span class="font-bold text-indigo-900 flex items-center gap-1.5">
+                            <span class="w-2 h-2 rounded-full bg-indigo-500"></span>
+                            NLP Triage Inference (Real-Time Preview)
+                        </span>
+                        <span id="previewPriority" class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded border border-emerald-200">
+                            Normal
+                        </span>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px] text-slate-600">
+                        <div>Detected Category: <strong id="previewCategory" class="text-slate-900">General Campus Services</strong></div>
+                        <div>Routing: <strong id="previewDept" class="text-indigo-800">Central Administrative Cell</strong></div>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-[11px] font-bold text-slate-600 uppercase tracking-wider mb-1.5">Attach Photo Evidence (Optional)</label>
+                    <input type="file" name="photo" accept="image/*"
+                        class="w-full text-xs text-slate-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-slate-100 file:text-slate-700 hover:file:bg-slate-200 cursor-pointer">
+                </div>
+
+                <button type="submit" class="w-full bg-gradient-to-r from-[#0f244a] to-indigo-900 hover:from-indigo-950 hover:to-blue-950 text-white font-bold py-3.5 px-6 rounded-xl text-sm transition shadow-lg flex items-center justify-center gap-2">
+                    🚀 Register & Dispatch Incident
+                </button>
+            </form>
+        </div>
+    </main>
+
+    <!-- Clean Footer -->
+    <footer class="bg-[#070e1c]/90 border-t border-slate-800/80 py-3.5 text-center text-xs text-slate-400">
+        CampusSync Automated Triage Platform | Support Desk: +91 74288 97000 | support@campussync.in
+    </footer>
+
+    <!-- Client-side Real-time Triage Script -->
+    <script>
+        const titleInput = document.getElementById('titleInput');
+        const descInput = document.getElementById('descInput');
+        const previewCat = document.getElementById('previewCategory');
+        const previewDept = document.getElementById('previewDept');
+        const previewPrio = document.getElementById('previewPriority');
+
+        const deptRules = {
+            "Wi-Fi & IT Infrastructure": {
+                dept: "Department of IT & Network Administration",
+                words: ["wifi", "wi-fi", "internet", "router", "lan", "slow", "network", "server", "portal", "login", "ethernet"]
+            },
+            "Electrical & Power Safety": {
+                dept: "Electrical Maintenance Division",
+                words: ["fan", "light", "switch", "short circuit", "spark", "plug", "socket", "power", "ac", "air conditioner", "wire", "shock"]
+            },
+            "Sanitation & Public Health": {
+                dept: "Sanitation & Housekeeping Dept",
+                words: ["washroom", "toilet", "dustbin", "garbage", "trash", "smell", "water", "leakage", "dirty", "drain", "stink"]
+            },
+            "Classroom Infrastructure & Civil": {
+                dept: "Estate & Civil Works Division",
+                words: ["bench", "chair", "desk", "blackboard", "whiteboard", "door", "window", "crack", "wall", "projector", "broken", "table"]
+            }
+        };
+
+        const urgentWords = ["spark", "fire", "danger", "shock", "flood", "smoke", "urgent", "hazard", "emergency"];
+
+        function runLiveTriage() {
+            const txt = (titleInput.value + " " + descInput.value).toLowerCase();
+            let matchedCat = "General Campus Services";
+            let matchedDept = "Central Administrative Cell";
+            let maxCount = 0;
+
+            for (const [cat, data] of Object.entries(deptRules)) {
+                let cnt = data.words.filter(w => txt.includes(w)).length;
+                if (cnt > maxCount) {
+                    maxCount = cnt;
+                    matchedCat = cat;
+                    matchedDept = data.dept;
+                }
+            }
+
+            previewCat.innerText = matchedCat;
+            previewDept.innerText = matchedDept;
+
+            if (urgentWords.some(w => txt.includes(w))) {
+                previewPrio.innerText = "Urgent";
+                previewPrio.className = "bg-rose-100 text-rose-800 text-[10px] font-bold px-2 py-0.5 rounded border border-rose-200";
+            } else if (maxCount >= 2) {
+                previewPrio.innerText = "High";
+                previewPrio.className = "bg-amber-100 text-amber-800 text-[10px] font-bold px-2 py-0.5 rounded border border-amber-200";
+            } else {
+                previewPrio.innerText = "Normal";
+                previewPrio.className = "bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded border border-emerald-200";
+            }
+        }
+
+        titleInput.addEventListener('input', runLiveTriage);
+        descInput.addEventListener('input', runLiveTriage);
+    </script>
+</body>
+</html>
